@@ -18,4 +18,9 @@ Gem::Specification.new do |spec|
   spec.metadata['changelog_uri'] = 'https://legionio.atlassian.net/wiki/spaces/LEX/pages/614891571'
   spec.metadata['bug_tracker_uri'] = 'https://bitbucket.org/legion-io/lex-smtp/issues'
   spec.require_paths = ['lib']
+
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'simplecov'
 end

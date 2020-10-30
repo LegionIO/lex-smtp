@@ -4,28 +4,39 @@ pipelines:
   tags:
     "v*":
       - step:
-          name: Tag Rubocop
+          name: Rubocop
           caches:
             - bundler
           script:
-            - bundle update --path vendor/bundle
-            - bundle exec rubocop
+            - gem install rubocop
+            - gem update rubocop
+            - rubocop
       - step:
-          name: Tag RSpec
+          name: RSpec
           caches:
             - bundler
           script:
-            - bundle update --path vendor/bundle
+            - gem install bundler
+            - gem update bundler
+            - bundle update
             - bundle exec rspec
+      - step:
+          name: Upload Artifact
+          script:
+            - gem install bundler rake
+            - rake build
+            - pipe: atlassian/bitbucket-upload-file
+              variables:
+                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                FILENAME: 'pkg/*.gem'
       - step:
           name: Push to RubyGems
           deployment: RubyGems
           trigger: manual
           script:
-            - gem install bundler gem-release rake rspec
-            - bundle update --path vendor/bundle
-            - rake build
-            - mkdir .gem
+            - gem install bundler gem-release rspec
+            - bundle install
             - (umask  077 ; echo $gem_creds | base64 --decode > ~/.gem/credentials)
             - gem release
           artifacts:
@@ -36,26 +47,32 @@ pipelines:
           caches:
             - bundler
           script:
-            - bundle update --path vendor/bundle
-            - bundle exec rubocop
+            - gem install rubocop
+            - gem update rubocop
+            - rubocop
       - step:
           caches:
             - bundler
           script:
-            - bundle update --path vendor/bundle
+            - gem install bundler
+            - gem update bundler
+            - bundle update
             - bundle exec rspec
     develop:
       - step:
           caches:
             - bundler
           script:
-            - bundle update --path vendor/bundle
-            - bundle exec rubocop
+            - gem install rubocop
+            - gem update rubocop
+            - rubocop
       - step:
           caches:
             - bundler
           script:
-            - bundle update --path vendor/bundle
+            - gem install bundler
+            - gem update bundler
+            - bundle update
             - bundle exec rspec
 
 definitions:

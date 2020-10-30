@@ -8,17 +8,14 @@ pipelines:
           caches:
             - bundler
           script:
-            - gem install rubocop
-            - gem update rubocop
-            - rubocop
+            - bundle update --path vendor/bundle
+            - bundle exec rubocop
       - step:
           name: Tag RSpec
           caches:
             - bundler
           script:
-            - gem install bundler
-            - gem update bundler
-            - bundle update
+            - bundle update --path vendor/bundle
             - bundle exec rspec
       - step:
           name: Push to RubyGems
@@ -26,7 +23,7 @@ pipelines:
           trigger: manual
           script:
             - gem install bundler gem-release rake rspec
-            - bundle install
+            - bundle update --path vendor/bundle
             - rake build
             - mkdir .gem
             - (umask  077 ; echo $gem_creds | base64 --decode > ~/.gem/credentials)
@@ -39,32 +36,26 @@ pipelines:
           caches:
             - bundler
           script:
-            - gem install rubocop
-            - gem update rubocop
-            - rubocop
+            - bundle update --path vendor/bundle
+            - bundle exec rubocop
       - step:
           caches:
             - bundler
           script:
-            - gem install bundler
-            - gem update bundler
-            - bundle update
+            - bundle update --path vendor/bundle
             - bundle exec rspec
     develop:
       - step:
           caches:
             - bundler
           script:
-            - gem install rubocop
-            - gem update rubocop
-            - rubocop
+            - bundle update --path vendor/bundle
+            - bundle exec rubocop
       - step:
           caches:
             - bundler
           script:
-            - gem install bundler
-            - gem update bundler
-            - bundle update
+            - bundle update --path vendor/bundle
             - bundle exec rspec
 
 definitions:

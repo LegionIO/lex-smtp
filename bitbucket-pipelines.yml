@@ -21,16 +21,6 @@ pipelines:
             - bundle update
             - bundle exec rspec
       - step:
-          name: Upload Artifact
-          script:
-            - gem install bundler rake
-            - rake build
-            - pipe: atlassian/bitbucket-upload-file
-              variables:
-                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
-                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
-                FILENAME: 'pkg/*.gem'
-      - step:
           name: Push to RubyGems
           deployment: RubyGems
           trigger: manual

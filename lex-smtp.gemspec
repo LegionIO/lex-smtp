@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'lib/legion/extensions/smtp/version'
 
 Gem::Specification.new do |spec|
@@ -8,15 +10,16 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'LEX::SMTP'
   spec.description   = 'LEX::SMTP'
-  spec.homepage      = 'https://bitbucket.org/legion-io/lex-smtp'
+  spec.homepage      = 'https://github.com/LegionIO/lex-smtp'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.5.0')
+  spec.required_ruby_version = '>= 3.4'
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://bitbucket.org/legion-io/lex-smtp'
-  spec.metadata['documentation_uri'] = 'https://legionio.atlassian.net/wiki/spaces/LEX/pages/612270184'
-  spec.metadata['changelog_uri'] = 'https://legionio.atlassian.net/wiki/spaces/LEX/pages/614891571'
-  spec.metadata['bug_tracker_uri'] = 'https://bitbucket.org/legion-io/lex-smtp/issues'
+  spec.metadata['source_code_uri'] = 'https://github.com/LegionIO/lex-smtp'
+  spec.metadata['documentation_uri'] = 'https://github.com/LegionIO/lex-smtp'
+  spec.metadata['changelog_uri'] = 'https://github.com/LegionIO/lex-smtp'
+  spec.metadata['bug_tracker_uri'] = 'https://github.com/LegionIO/lex-smtp/issues'
+  spec.metadata['rubygems_mfa_required'] = 'true'
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'rake'

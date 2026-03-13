@@ -1,12 +1,14 @@
 # lex-smtp: SMTP Email Extension for LegionIO
 
 **Repository Level 3 Documentation**
-- **Category**: `/Users/miverso2/rubymine/legion/extensions/CLAUDE.md`
+- **Parent**: `/Users/miverso2/rubymine/legion/extensions-other/CLAUDE.md`
+- **Grandparent**: `/Users/miverso2/rubymine/legion/CLAUDE.md`
 
 ## Purpose
 
-Legion Extension that sends emails via SMTP from within Legion task chains. Provides runners for composing and delivering email messages.
+Legion Extension that sends emails via SMTP from within Legion task chains. Uses Ruby's built-in `Net::SMTP` library - no external gem dependency.
 
+**GitHub**: https://github.com/LegionIO/lex-smtp
 **License**: MIT
 
 ## Architecture
@@ -14,7 +16,7 @@ Legion Extension that sends emails via SMTP from within Legion task chains. Prov
 ```
 Legion::Extensions::Smtp
 └── Runners/
-    └── Email              # Email composition and delivery via SMTP
+    └── Email              # Email composition and delivery via Net::SMTP
 ```
 
 ## Key Files
@@ -22,9 +24,29 @@ Legion::Extensions::Smtp
 | Path | Purpose |
 |------|---------|
 | `lib/legion/extensions/smtp.rb` | Entry point, extension registration |
-| `lib/legion/extensions/smtp/runners/email.rb` | Email sending logic |
+| `lib/legion/extensions/smtp/runners/email.rb` | `send(to:, body:, from:, subject:, port: 25, address: 'localhost')` |
 
-## Testing
+## Runner: Email
+
+```ruby
+# Payload
+{
+  to: "recipient@example.com",
+  from: "sender@example.com",
+  subject: "Hello",
+  body: "Message body",
+  address: "smtp.example.com",  # default: localhost
+  port: 587                      # default: 25
+}
+```
+
+Uses `Net::SMTP.start` to deliver messages. No TLS/authentication support in current implementation.
+
+## Dependencies
+
+No runtime gem dependencies - uses Ruby's built-in `net/smtp`.
+
+## Development
 
 ```bash
 bundle install

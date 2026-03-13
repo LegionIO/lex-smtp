@@ -1,6 +1,6 @@
 # lex-smtp
 
-SMTP email extension for [LegionIO](https://github.com/LegionIO/LegionIO). Compose and deliver emails via SMTP from within task chains.
+SMTP email extension for [LegionIO](https://github.com/LegionIO/LegionIO). Compose and deliver emails via SMTP from within task chains using Ruby's built-in `Net::SMTP`.
 
 ## Installation
 
@@ -8,9 +8,34 @@ SMTP email extension for [LegionIO](https://github.com/LegionIO/LegionIO). Compo
 gem install lex-smtp
 ```
 
-## Functions
+Or add to your Gemfile:
 
-- **Email** - Email composition and delivery via SMTP
+```ruby
+gem 'lex-smtp'
+```
+
+## Usage
+
+Send an email by triggering the `email.send` runner:
+
+```json
+{
+  "to": "recipient@example.com",
+  "from": "sender@example.com",
+  "subject": "Hello from Legion",
+  "body": "Message body text",
+  "address": "smtp.example.com",
+  "port": 587
+}
+```
+
+## Runner
+
+| Runner | Method | Required Parameters |
+|--------|--------|-------------------|
+| Email | `send` | `to`, `from`, `subject`, `body` |
+
+Optional: `address` (default: `localhost`), `port` (default: `25`)
 
 ## Requirements
 

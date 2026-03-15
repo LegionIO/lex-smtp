@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     lex-smtp (0.1.0)
+      net-smtp
 
 GEM
   remote: https://rubygems.org/
@@ -20,6 +21,10 @@ GEM
     lint_roller (1.1.0)
     mcp (0.8.0)
       json-schema (>= 4.1)
+    net-protocol (0.2.2)
+      timeout
+    net-smtp (0.5.1)
+      net-protocol
     parallel (1.27.0)
     parser (3.3.10.2)
       ast (~> 2.4.1)
@@ -65,6 +70,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
+    timeout (0.6.1)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)

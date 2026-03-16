@@ -2,14 +2,19 @@
 
 require 'spec_helper'
 require 'net/smtp'
+require 'legion/extensions/smtp/helpers/client'
 require 'legion/extensions/smtp/runners/email'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe Legion::Extensions::Smtp::Runners::Email do
   let(:smtp_session) { instance_double(Net::SMTP) }
+  let(:smtp_conn) { instance_double(Net::SMTP) }
 
   let(:runner) do
-    Class.new { include Legion::Extensions::Smtp::Runners::Email }.new
+    Class.new do
+      include Legion::Extensions::Smtp::Helpers::Client
+      include Legion::Extensions::Smtp::Runners::Email
+    end.new
   end
 
   let(:base_args) do
@@ -22,19 +27,20 @@ RSpec.describe Legion::Extensions::Smtp::Runners::Email do
   end
 
   before do
-    allow(Net::SMTP).to receive(:start).and_yield(smtp_session)
+    allow(Net::SMTP).to receive(:new).and_return(smtp_conn)
+    allow(smtp_conn).to receive(:start).and_yield(smtp_session)
     allow(smtp_session).to receive(:send_message)
   end
 
   describe '#send' do
     it 'opens an SMTP connection to localhost on port 25 by default' do
       runner.send(**base_args)
-      expect(Net::SMTP).to have_received(:start).with('localhost', 25)
+      expect(Net::SMTP).to have_received(:new).with('localhost', 25)
     end
 
     it 'opens an SMTP connection to the given address and port' do
       runner.send(**base_args, address: 'smtp.example.com', port: 587)
-      expect(Net::SMTP).to have_received(:start).with('smtp.example.com', 587)
+      expect(Net::SMTP).to have_received(:new).with('smtp.example.com', 587)
     end
 
     it 'sends the message body' do
@@ -83,7 +89,7 @@ RSpec.describe Legion::Extensions::Smtp::Runners::Email do
 
     context 'when the SMTP server raises an error' do
       before do
-        allow(Net::SMTP).to receive(:start).and_raise(Net::SMTPFatalError, '550 User unknown')
+        allow(smtp_conn).to receive(:start).and_raise(Net::SMTPFatalError, '550 User unknown')
       end
 
       it 'propagates the SMTP error' do
@@ -93,7 +99,7 @@ RSpec.describe Legion::Extensions::Smtp::Runners::Email do
 
     context 'when connection is refused' do
       before do
-        allow(Net::SMTP).to receive(:start).and_raise(Errno::ECONNREFUSED)
+        allow(smtp_conn).to receive(:start).and_raise(Errno::ECONNREFUSED)
       end
 
       it 'propagates the connection error' do

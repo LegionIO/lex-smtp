@@ -37,6 +37,19 @@ Send an email by triggering the `email.send` runner:
 
 Optional: `address` (default: `localhost`), `port` (default: `25`)
 
+## Standalone Client
+
+Use `lex-smtp` as a standalone email client without the full Legion framework:
+
+```ruby
+require 'legion/extensions/smtp/client'
+
+client = Legion::Extensions::Smtp::Client.new(address: 'smtp.example.com', port: 587)
+client.send(to: 'user@example.com', from: 'bot@example.com', subject: 'Hello', body: 'World')
+```
+
+Options passed to `Client.new` become defaults for all sends. You can override per-call via the `send` keyword arguments.
+
 ## Requirements
 
 - Ruby >= 3.4

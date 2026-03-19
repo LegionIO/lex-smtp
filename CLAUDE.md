@@ -81,9 +81,13 @@ The constructor merges provided options over defaults `{ address: 'localhost', p
 
 ## Dependencies
 
-No runtime gem dependencies - uses Ruby's built-in `net/smtp`.
+| Gem | Purpose |
+|-----|---------|
+| `net-smtp` | SMTP client (extracted from Ruby stdlib in Ruby 3.1; declared as explicit dependency) |
 
 ## Development
+
+18 specs total.
 
 ```bash
 bundle install

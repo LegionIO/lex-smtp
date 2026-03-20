@@ -53,8 +53,8 @@ Options passed to `Client.new` become defaults for all sends. You can override p
 ## Requirements
 
 - Ruby >= 3.4
-- [LegionIO](https://github.com/LegionIO/LegionIO) framework
 - SMTP server
+- [LegionIO](https://github.com/LegionIO/LegionIO) framework (optional — standalone Client works without it)
 
 ## License
 

@@ -9,7 +9,7 @@
 Legion Extension that sends emails via SMTP from within Legion task chains. Uses Ruby's built-in `Net::SMTP` library - no external gem dependency.
 
 **GitHub**: https://github.com/LegionIO/lex-smtp
-**Version**: 0.2.0
+**Version**: 0.2.1
 **License**: MIT
 
 ## Architecture
